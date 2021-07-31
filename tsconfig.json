@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    // 这两个地方没有具体填写转化版本,因为在babel中对转化进行了设置
+    "target": "esnext",     //  目标代码
+    "module": "esnext",     //  目标代码使用的模块化方案
+    "strict": true,
+    "jsx": "preserve",      //  对jsx进行何种转化
+    "importHelpers": true,  //  是否需要将polyfill等文件在编译后导入,而不是直接编译到源码中
+    "moduleResolution": "node", // 模块解析方案
+    "skipLibCheck": true,   //  是否跳过对库的类型检测
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,   // 是否允许多种模块方案
+    "sourceMap": true,      // 是否生成map文件
+    "baseUrl": ".",         // 解析时的基本路径
+    "types": ["webpack-env", "node"],
+
+    // 编译阶段的路径解析,在vue.config.js中配置别名后还需要在此处配置
+    "paths": {
+      "@/*": ["src/*"],
+      "assets": ["src/assets"],
+      "components": ["src/components"],
+      "global": ["src/global"],
+      "router": ["src/router"],
+      "store": ["src/store"],
+      "views": ["src/views"],
+    },
+    // 默认可以使用的内置库中的类型
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+  },
+  // 哪些代码是需要经过ts编译的
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  // 当include中包含的文件引用了三方库,会依赖node_modules中的源码,
+  // 如果配置了exclude那么这些源码就不再会进行解析
+  "exclude": ["node_modules"]
+}
