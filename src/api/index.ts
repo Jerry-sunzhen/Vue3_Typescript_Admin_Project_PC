@@ -1,9 +1,10 @@
 // api 文件的统一出口
 
 import JRequest from "@/api/request"
+import { baseURL } from "./request/config"
 
 const jRequest = new JRequest({
-  baseURL: "http://152.136.185.210:8000/api/w6",
+  baseURL,
   timeout: 5000,
   // 实例化的时候可以在config中直接传入拦截器函数
   interceptors: {
