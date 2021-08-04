@@ -5,13 +5,13 @@ let baseURL: string
 
 switch (process.env.NODE_ENV) {
   case "development":
-    baseURL = "http://152.136.185.210:8000/api/w6"
+    baseURL = "/dev-api"
     break
   case "production":
-    baseURL = "http://production.jerry.net"
+    baseURL = "/prod-api"
     break
   case "test":
-    baseURL = "http://test.jerry.net"
+    baseURL = "/test-api"
     break
 }
 

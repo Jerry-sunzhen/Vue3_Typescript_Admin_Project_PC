@@ -16,7 +16,16 @@ module.exports = {
   },
   configureWebpack: {
     devServer: {
-      hot: true
+      hot: true,
+      proxy: {
+        "/dev-api": {
+          target: "http://152.136.185.210:5000",
+          changeOrigin: true,
+          pathRewrite: {
+            "^/dev-api": ""
+          }
+        }
+      }
     }
   }
 }

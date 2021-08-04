@@ -21,7 +21,8 @@ import { defineComponent, reactive, ref } from "vue"
 import { ElForm } from "element-plus"
 // 引入用户名密码登陆所需满足的规则
 import userRules from "../config/userRules"
-import localCache from "@/utils/localCache"
+import localCache from "@/utils/local-cache"
+import api from "@/api"
 
 export default defineComponent({
   setup() {
@@ -34,8 +35,13 @@ export default defineComponent({
 
     function login(isRemember: boolean): void {
       // 调用el-form组件的validate方法获取验证的状态
-      userFormRef.value?.validate((isValidate) => {
+      userFormRef.value?.validate(async (isValidate) => {
         if (isValidate) {
+          const result = await api.login.usernameLogin(
+            userInfo.username,
+            userInfo.password
+          )
+          console.log(result)
           // 调用actions发送请求,并将数据保存到state中
           if (isRemember) {
             // 如果记住密码被勾选中则将账号密码存储到localStorage中,密码在进行本地存储的时候进行加密再存储
