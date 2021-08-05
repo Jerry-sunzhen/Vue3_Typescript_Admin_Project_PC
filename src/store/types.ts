@@ -8,4 +8,5 @@ export declare interface IRootState {
 export declare interface ILoginState {
   token: string
   userInfo: any
+  userMenuList: any[]
 }

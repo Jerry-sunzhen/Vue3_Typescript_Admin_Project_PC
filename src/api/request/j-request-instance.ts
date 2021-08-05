@@ -2,6 +2,7 @@
 
 import JRequest from "@/api/request/j-request"
 import { baseURL } from "./config"
+import localCache from "@/utils/local-cache"
 
 const jRequest = new JRequest({
   baseURL,
@@ -10,7 +11,7 @@ const jRequest = new JRequest({
   interceptors: {
     // 实例级别的请求拦截器添加token
     requestInterceptor(config) {
-      const token = localStorage.getItem("token")
+      const token = localCache.getCache("token")
       if (token) {
         config.headers.Authorization = `Bearer ${token}`
       }

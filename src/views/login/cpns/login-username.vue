@@ -8,7 +8,6 @@
         <el-input
           v-model="userInfo.password"
           type="password"
-          show-password
           placeholder="请输入密码"
         />
       </el-form-item>
@@ -22,7 +21,8 @@ import { ElForm } from "element-plus"
 // 引入用户名密码登陆所需满足的规则
 import userRules from "../config/userRules"
 import localCache from "@/utils/local-cache"
-import api from "@/api"
+
+import { useStore } from "vuex"
 
 export default defineComponent({
   setup() {
@@ -33,15 +33,17 @@ export default defineComponent({
     })
     const userFormRef = ref<InstanceType<typeof ElForm>>()
 
-    function login(isRemember: boolean): void {
+    const store = useStore()
+
+    function usernameLogin(isRemember: boolean) {
       // 调用el-form组件的validate方法获取验证的状态
       userFormRef.value?.validate(async (isValidate) => {
         if (isValidate) {
-          const result = await api.login.usernameLogin(
-            userInfo.username,
-            userInfo.password
-          )
-          console.log(result)
+          await store.dispatch("login/usernameLogin", {
+            username: userInfo.username,
+            password: userInfo.password
+          })
+
           // 调用actions发送请求,并将数据保存到state中
           if (isRemember) {
             // 如果记住密码被勾选中则将账号密码存储到localStorage中,密码在进行本地存储的时候进行加密再存储
@@ -60,7 +62,7 @@ export default defineComponent({
       userInfo,
       userRules,
       userFormRef,
-      login
+      usernameLogin
     }
   }
 })

@@ -35,7 +35,7 @@ export default defineComponent({
       console.log("getVerifyCode")
     }
 
-    function login(): void {
+    function phoneLogin() {
       console.log("phone")
     }
 
@@ -44,7 +44,7 @@ export default defineComponent({
       phoneRules,
       phoneFormRef,
       getVerifyCode,
-      login
+      phoneLogin
     }
   }
 })

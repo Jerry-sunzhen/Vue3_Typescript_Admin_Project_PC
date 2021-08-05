@@ -50,9 +50,11 @@ class JRequest {
         this.loading?.close()
         return res.data
       },
-      () => {
+      (error) => {
         // 产生错误时也需移除loading
         this.loading?.close()
+        // 注意此处需要抛出错误,否则后续无法catch到错误
+        throw new Error(error?.response.data)
       }
     )
   }

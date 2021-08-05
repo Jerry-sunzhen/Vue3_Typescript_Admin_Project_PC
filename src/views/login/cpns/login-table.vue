@@ -42,6 +42,7 @@ export default defineComponent({
     const phoneRef = ref<InstanceType<typeof LoginPhone>>()
 
     type LoginType = "username" | "phone"
+    // 注意:这里初始化的时候需要赋一个初始tab上的name值
     const loginType = ref<LoginType>("username")
 
     function login(): void {
@@ -49,14 +50,15 @@ export default defineComponent({
         case "username":
           // 在调用组件实例身上的login函数的时候使用可选链保证不报错
           // 如果是通过用户名进行的登陆的需要将isRemember传递过去,决定是否保存账号密码
-          usernameRef.value?.login(isRemember.value)
+          usernameRef.value?.usernameLogin(isRemember.value)
           break
         case "phone":
-          phoneRef.value?.login()
+          phoneRef.value?.phoneLogin()
           break
         default:
           // 在此处可以声明一个变量并定义为never属性,表示该段代码应当永远无法到达
           const type: never = loginType.value
+          return type
       }
     }
 

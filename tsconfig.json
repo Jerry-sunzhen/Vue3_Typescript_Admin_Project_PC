@@ -23,6 +23,7 @@
       "router": ["src/router"],
       "store": ["src/store"],
       "views": ["src/views"],
+      "hooks": ["src/hooks"],
     },
     // 默认可以使用的内置库中的类型
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
