@@ -11,9 +11,7 @@
       <el-header height="30px">
         <main-nav v-model:isFolded="isFolded" />
       </el-header>
-      <el-main>
-        <router-view />
-      </el-main>
+      <el-main>Main</el-main>
     </el-container>
   </el-container>
 </template>

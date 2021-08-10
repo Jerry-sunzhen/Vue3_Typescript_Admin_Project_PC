@@ -6,16 +6,25 @@ import type { RouteRecordRaw } from "vue-router"
 
 const routes: RouteRecordRaw[] = [
   {
+    name: "main",
+    path: "/main",
+    component: () => import("@/views/main/main.vue"),
+    // 注意: main路由下的main-menu菜单相关的子路由需要动态生成
+    children: []
+  },
+  {
+    name: "login",
+    path: "/login",
+    component: () => import("@/views/login/login.vue")
+  },
+  {
     path: "/",
     redirect: "/main"
   },
   {
-    path: "/main",
-    component: () => import("views/main/main.vue")
-  },
-  {
-    path: "/login",
-    component: () => import("views/login/login.vue")
+    name: "not-found",
+    path: "/:pathMatch(.*)*",
+    component: () => import("@/views/not-found/not-found.vue")
   }
 ]
 

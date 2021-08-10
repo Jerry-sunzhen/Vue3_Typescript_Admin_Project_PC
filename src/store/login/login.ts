@@ -4,7 +4,9 @@ import router from "@/router"
 
 import api from "@/api"
 import localCache from "@/utils/local-cache"
-import type { ILoginState, IRootState } from "../types"
+import type { IRootState } from "../types"
+import { ILoginState } from "@/store/login/types"
+import mapMenuToRoutes from "@/utils/map-menu-to-routes"
 
 // Module类型接收两个泛型
 // 第一个泛型为模块中state函数返回对象类型,第二个泛型为根模块中state返回对象的属性
@@ -23,22 +25,15 @@ const loginModule: Module<ILoginState, IRootState> = {
     setUserInfo(state, userInfo) {
       state.userInfo = userInfo
     },
+    // 当调用setUserMenuList的mutation的同时,将userMenuList对应的路由表映射出来并进行注册
     setUserMenuList(state, userMenuList) {
       state.userMenuList = userMenuList
-    },
-    resetLoginsState(state) {
-      const token = localCache.getCache("token")
-      if (token) {
-        state.token = token
-      }
-      const userInfo = localCache.getCache("userInfo")
-      if (userInfo) {
-        state.userInfo = userInfo
-      }
-      const userMenuList = localCache.getCache("userMenuList")
-      if (userMenuList) {
-        state.userMenuList = userMenuList
-      }
+
+      // 动态生成userMenu映射成的routes数组,并进行遍历动态注册到main路由中
+      const routes = mapMenuToRoutes(userMenuList)
+      routes.forEach((route) => {
+        router.addRoute("main", route)
+      })
     }
   },
   actions: {
@@ -74,7 +69,18 @@ const loginModule: Module<ILoginState, IRootState> = {
 
     // 刷新页面后初始化仓库
     resetLoginsState(ctx) {
-      ctx.commit("resetLoginsState")
+      const token = localCache.getCache("token")
+      if (token) {
+        ctx.commit("setToken", token)
+      }
+      const userInfo = localCache.getCache("userInfo")
+      if (userInfo) {
+        ctx.commit("setUserInfo", userInfo)
+      }
+      const userMenuList = localCache.getCache("userMenuList")
+      if (userMenuList) {
+        ctx.commit("setUserMenuList", userMenuList)
+      }
     }
   }
 }
