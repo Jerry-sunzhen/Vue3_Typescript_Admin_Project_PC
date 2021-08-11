@@ -5,7 +5,7 @@ import router from "@/router"
 import api from "@/api"
 import localCache from "@/utils/local-cache"
 import type { IRootState } from "../types"
-import { ILoginState } from "@/store/login/types"
+import type { ILoginState, IUserInfo, IUserMenu } from "@/store/login/types"
 import mapMenuToRoutes from "@/utils/map-menu-to-routes"
 
 // Module类型接收两个泛型
@@ -22,11 +22,11 @@ const loginModule: Module<ILoginState, IRootState> = {
     setToken(state, token) {
       state.token = token
     },
-    setUserInfo(state, userInfo) {
+    setUserInfo(state, userInfo: IUserInfo) {
       state.userInfo = userInfo
     },
     // 当调用setUserMenuList的mutation的同时,将userMenuList对应的路由表映射出来并进行注册
-    setUserMenuList(state, userMenuList) {
+    setUserMenuList(state, userMenuList: IUserMenu[]) {
       state.userMenuList = userMenuList
 
       // 动态生成userMenu映射成的routes数组,并进行遍历动态注册到main路由中

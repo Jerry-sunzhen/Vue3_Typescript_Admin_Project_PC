@@ -17,10 +17,13 @@ const app = createApp(App)
 
 app.use(globalRegister)
 
-app.use(router)
 app.use(store)
 
 // 每次刷新界面后恢复本地存储的数据到vuex中
 useResetStore()
+// 注意注册路由需要放在useResetStore之后,因为恢复store的时候会动态注册路由,
+// 在此之前如果直接使用了app.use(router),那么会通过当前url去事先匹配路由,
+// 由于动态注册的路由都还未注册,最终只能匹配到notFound,因此为了避免该bug,应当先调用useResetStore
+app.use(router)
 
 app.mount("#app")

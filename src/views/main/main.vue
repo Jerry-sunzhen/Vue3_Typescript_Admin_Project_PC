@@ -1,6 +1,6 @@
 <template>
   <el-container class="main">
-    <el-aside :width="isFolded ? '60px' : '240px'" class="main-aside">
+    <el-aside :width="isFolded ? '60px' : '180px'" class="main-aside">
       <div class="aside-title">
         <img src="~@/assets/image/logo.jpeg" class="aside-logo" alt="" />
         <h3 class="aside-word" v-show="!isFolded">Jerry CMS</h3>

@@ -1,5 +1,6 @@
 <template>
   <el-menu
+    :default-active="defaultActive"
     class="main-menu"
     :uniqueOpened="true"
     background-color="#545c64"
@@ -20,7 +21,7 @@
       <el-menu-item-group v-for="submenu in menu.children" :key="submenu.id">
         <el-menu-item
           :index="`${submenu.id}`"
-          @click="menuItemClick(submenu.url)"
+          @click="menuItemClick(submenu.url, submenu.id)"
           >{{ submenu.name }}</el-menu-item
         >
       </el-menu-item-group>
@@ -29,11 +30,13 @@
 </template>
 `
 <script lang="ts">
-import { defineComponent, computed } from "vue"
+import { defineComponent, computed, ref } from "vue"
 // 组件中都不使用原生useStore,而是使用自定义的store/index.ts中的useStore函数
 // import { useStore } from "vuex"
 import { useStore } from "@/store"
-import { useRouter } from "vue-router"
+import { useRouter, useRoute } from "vue-router"
+import { IUserMenu } from "@/store/login/types"
+
 export default defineComponent({
   props: {
     isFolded: {
@@ -44,14 +47,22 @@ export default defineComponent({
   setup() {
     // 为了更好的约束store的类型,需要自定义一个useStore的hook将vuex中原生提供的useStore进行类型约束增强
     const store = useStore()
-    const userMenuList = computed(() => store.state.login.userMenuList)
+    const userMenuList = computed<IUserMenu[]>(
+      () => store.state.login.userMenuList
+    )
     const router = useRouter()
-    function menuItemClick(url: string) {
+    function menuItemClick(url: string, id: number) {
       router.push(url)
+      defaultActive.value = `${id}`
     }
+    // 初始化main-menu中默认选中的导航条时需要根据当前路由进行读取
+    // const initRoute = useRoute()
+    const defaultActive = ref<string>()
+
     return {
       userMenuList,
-      menuItemClick
+      menuItemClick,
+      defaultActive
     }
   }
 })
