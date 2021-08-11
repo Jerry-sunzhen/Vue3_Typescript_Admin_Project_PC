@@ -1,8 +1,9 @@
-const component = import("@/views/main/story/list/list.vue")
+import { RouteComponent } from "vue-router"
 
 export default {
   name: "list",
   path: "/main/story/list",
   children: [],
-  component
+  component: (): Promise<RouteComponent> =>
+    import("@/views/main/story/list/list.vue")
 }

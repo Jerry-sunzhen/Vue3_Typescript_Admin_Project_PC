@@ -1,8 +1,9 @@
-const component = import("@/views/main/system/role/role.vue")
+import { RouteComponent } from "vue-router"
 
 export default {
   name: "role",
   path: "/main/system/role",
   children: [],
-  component
+  component: (): Promise<RouteComponent> =>
+    import("@/views/main/system/role/role.vue")
 }

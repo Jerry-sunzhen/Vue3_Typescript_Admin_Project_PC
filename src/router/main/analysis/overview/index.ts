@@ -1,8 +1,9 @@
-const component = import("@/views/main/analysis/overview/overview.vue")
+import { RouteComponent } from "vue-router"
 
 export default {
   name: "overview",
   path: "/main/analysis/overview",
   children: [],
-  component
+  component: (): Promise<RouteComponent> =>
+    import("@/views/main/analysis/overview/overview.vue")
 }

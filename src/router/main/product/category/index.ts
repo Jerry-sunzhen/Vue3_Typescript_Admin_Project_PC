@@ -1,8 +1,9 @@
-const component = import("@/views/main/product/category/category.vue")
+import { RouteComponent } from "vue-router"
 
 export default {
   name: "category",
   path: "/main/product/category",
   children: [],
-  component
+  component: (): Promise<RouteComponent> =>
+    import("@/views/main/product/category/category.vue")
 }

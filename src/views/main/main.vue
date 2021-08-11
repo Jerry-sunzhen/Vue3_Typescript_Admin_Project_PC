@@ -11,7 +11,7 @@
       <el-header height="30px">
         <main-nav v-model:isFolded="isFolded" />
       </el-header>
-      <el-main>
+      <el-main class="main-router-view">
         <router-view />
       </el-main>
     </el-container>
@@ -52,11 +52,15 @@ export default defineComponent({
       align-items: center;
       .aside-word {
         margin: 10px;
+        min-width: 100px;
       }
       .aside-logo {
         height: 80%;
       }
     }
+  }
+  .main-router-view {
+    min-width: 400px;
   }
 }
 </style>

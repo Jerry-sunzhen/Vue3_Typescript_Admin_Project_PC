@@ -1,8 +1,9 @@
-const component = import("@/views/main/story/chat/chat.vue")
+import { RouteComponent } from "vue-router"
 
 export default {
   name: "chat",
   path: "/main/story/chat",
   children: [],
-  component
+  component: (): Promise<RouteComponent> =>
+    import("@/views/main/story/chat/chat.vue")
 }
