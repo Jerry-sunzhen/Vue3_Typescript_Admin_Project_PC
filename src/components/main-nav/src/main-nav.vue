@@ -5,12 +5,7 @@
     </div>
     <div class="nav-container">
       <div class="breadcrumb">
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-          <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-          <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-        </el-breadcrumb>
+        <j-breadcrumb :breadcrumb-list="breadcrumbList" />
       </div>
       <div class="nav-bar">
         <el-dropdown trigger="hover">
@@ -41,17 +36,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
-
+import { defineComponent, computed } from "vue"
+import { useRoute } from "vue-router"
+import { useStore } from "@/store"
+import { JBreadcrumb } from "@/common-components"
+import mapRouteToBreadcrumbList from "@/utils/map-route-to-breadcrumb-list"
 export default defineComponent({
   props: ["isFolded"],
+  components: {
+    JBreadcrumb
+  },
   setup(props, { emit }) {
     function changeFoldStatus() {
       emit("update:isFolded", !props.isFolded)
     }
 
+    const route = useRoute()
+    const store = useStore()
+    const breadcrumbList = computed(() =>
+      mapRouteToBreadcrumbList(route.path, store.state.login.flatUserMenuList)
+    )
+
     return {
-      changeFoldStatus
+      changeFoldStatus,
+      breadcrumbList
     }
   }
 })
