@@ -35,7 +35,7 @@ import { defineComponent, computed, ref } from "vue"
 // import { useStore } from "vuex"
 import { useStore } from "@/store"
 import { useRouter, useRoute } from "vue-router"
-import { IUserMenu } from "@/store/login/types"
+import type { IUserMenu } from "@/store/login/types"
 
 export default defineComponent({
   props: {
@@ -56,8 +56,14 @@ export default defineComponent({
       defaultActive.value = `${id}`
     }
     // 初始化main-menu中默认选中的导航条时需要根据当前路由进行读取
-    // const initRoute = useRoute()
-    const defaultActive = ref<string>()
+    const initRoutePath = useRoute().path
+    // 重新刷新页面初始化时url中当前路由对应的id
+    const initRouteId = store.state.login.flatUserMenuList.find(
+      (route) => route.url === initRoutePath
+    )?.id
+    const defaultRouteId = store.state.login.flatUserMenuList[0].id
+
+    const defaultActive = ref<string>(`${initRouteId ?? defaultRouteId}`)
 
     return {
       userMenuList,

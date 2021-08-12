@@ -7,6 +7,7 @@ import localCache from "@/utils/local-cache"
 import type { IRootState } from "../types"
 import type { ILoginState, IUserInfo, IUserMenu } from "@/store/login/types"
 import mapMenuToRoutes from "@/utils/map-menu-to-routes"
+import flatMenuToList from "@/utils/flat-menu-to-list"
 
 // Module类型接收两个泛型
 // 第一个泛型为模块中state函数返回对象类型,第二个泛型为根模块中state返回对象的属性
@@ -15,7 +16,8 @@ const loginModule: Module<ILoginState, IRootState> = {
   state: () => ({
     token: "",
     userInfo: {},
-    userMenuList: []
+    userMenuList: [],
+    flatUserMenuList: []
   }),
   getters: {},
   mutations: {
@@ -34,6 +36,9 @@ const loginModule: Module<ILoginState, IRootState> = {
       routes.forEach((route) => {
         router.addRoute("main", route)
       })
+
+      // 通过引入工具函数获取到接口返回数据中路由组件对应的对象组成的一维数组并放入login对应的仓库中
+      state.flatUserMenuList = flatMenuToList(userMenuList)
     }
   },
   actions: {

@@ -2,6 +2,7 @@ export declare interface ILoginState {
   token: string
   userInfo: IUserInfo | Record<string, never>
   userMenuList: IUserMenu[] | []
+  flatUserMenuList: IUserSubMenu[] | []
 }
 
 //----自动生成的接口

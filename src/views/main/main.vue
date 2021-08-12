@@ -42,7 +42,7 @@ export default defineComponent({
 .main {
   height: 100%;
   .main-aside {
-    transition: 0.6s;
+    transition: 0.6s ease;
     background-color: #545c64;
     color: #fff;
     .aside-title {

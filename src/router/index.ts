@@ -1,8 +1,9 @@
-import { createRouter, createWebHistory } from "vue-router"
-import localCache from "@/utils/local-cache"
-
 // 如果从包中引入的是类型,那么通常在import关键字之后添加type关键字,提示之后引入的都是类型
 import type { RouteRecordRaw } from "vue-router"
+import { createRouter, createWebHistory } from "vue-router"
+import localCache from "@/utils/local-cache"
+import store from "store"
+import { IStoreType } from "@/store/types"
 
 const routes: RouteRecordRaw[] = [
   {
@@ -39,6 +40,10 @@ router.beforeEach((to) => {
     const token = localCache.getCache("token")
     if (!token) {
       return "/login"
+    } else if (to.path === "/main") {
+      // 如果登陆成功状态直接访问根目录会首先被重定向到/main
+      // 进入该逻辑分支并被再次重定向到flatUserMenuList中第一个对象中的url
+      return (store.state as IStoreType).login.flatUserMenuList[0]?.url
     }
   }
 })

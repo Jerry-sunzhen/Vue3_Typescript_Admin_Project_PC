@@ -1,8 +1,11 @@
 // 该工具函数负责将接收到的权限菜单对象映射成对应的路由对象
 
-import { RouteRecordRaw } from "vue-router"
+import type { RouteRecordRaw } from "vue-router"
+import type { IUserMenu } from "@/store/login/types"
 
-export default function mapMenuToRoutes(userMenu: any[]): RouteRecordRaw[] {
+export default function mapMenuToRoutes(
+  userMenu: IUserMenu[]
+): RouteRecordRaw[] {
   const userRoutes: RouteRecordRaw[] = []
   const allRoutes: RouteRecordRaw[] = []
 
