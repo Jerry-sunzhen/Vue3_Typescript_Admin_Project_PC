@@ -1,4 +1,5 @@
-import JHocForm from "@/common-components/j-hoc-form/src/j-hoc-form.vue"
-import JBreadcrumb from "@/common-components/j-breadcrumb/src/j-breadcrumb.vue"
+import JHocForm from "./j-hoc-form"
+import JBreadcrumb from "./j-breadcrumb"
+import JTable from "./j-table"
 
-export { JHocForm, JBreadcrumb }
+export { JHocForm, JBreadcrumb, JTable }

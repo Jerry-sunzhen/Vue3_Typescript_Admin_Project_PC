@@ -1,11 +1,13 @@
 import { createStore, Store, useStore as baseUseStore } from "vuex"
 import login from "./login/login"
+import system from "./main/system/system"
 import { IRootState, IStoreType } from "@/store/types"
 // createStore函数接收一个泛型,该类型用来约束state
 const store = createStore<IRootState>({
   state: () => ({}),
   modules: {
-    login
+    login,
+    system
   }
 })
 

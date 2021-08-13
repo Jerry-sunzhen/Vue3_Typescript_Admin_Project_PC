@@ -1,8 +1,10 @@
-import * as login from "./login/index"
+import * as login from "./login"
+import * as main from "./main"
 import type { IApi } from "./types"
 
 const api: IApi = {
-  login
+  login,
+  main
 }
 
 export default api

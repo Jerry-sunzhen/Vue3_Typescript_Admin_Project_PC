@@ -44,7 +44,9 @@ const userJHocFormConfig: JHocFormConfig = {
     borderRadius: "5px"
   },
   responsiveConfig: {
-    lg: 8
+    lg: 8,
+    md: 12,
+    sm: 24
   }
 }
 

@@ -20,6 +20,7 @@ module.exports = {
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off"
   }
 }
