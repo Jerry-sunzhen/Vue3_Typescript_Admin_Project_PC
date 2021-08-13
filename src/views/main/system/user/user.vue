@@ -1,12 +1,23 @@
 <template>
   <div>
-    <h2>User</h2>
-    <j-hoc-form v-bind="userJHocFormConfig" />
+    <j-hoc-form v-bind="userJHocFormConfig" v-model="formData">
+      <template #header>
+        <p class="form-header">检索表</p>
+      </template>
+      <template #footer>
+        <div class="form-footer">
+          <el-button type="info" icon="el-icon-refresh-right">重置</el-button>
+          <el-button type="primary" @click="search" icon="el-icon-search"
+            >搜索</el-button
+          >
+        </div>
+      </template>
+    </j-hoc-form>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, ref } from "vue"
 import { JHocForm } from "@/common-components"
 
 // 引入user中使用JHocForm相关的配置参数对象
@@ -16,11 +27,34 @@ export default defineComponent({
     JHocForm
   },
   setup() {
+    const formData = ref({
+      username: "",
+      password: "",
+      friends: "",
+      time: ""
+    })
+
+    function search() {
+      console.log("!!!")
+    }
+
     return {
-      userJHocFormConfig
+      formData,
+      userJHocFormConfig,
+      search
     }
   }
 })
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.form-header {
+  height: 20px;
+  text-align: center;
+  font-size: 20px;
+}
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+</style>

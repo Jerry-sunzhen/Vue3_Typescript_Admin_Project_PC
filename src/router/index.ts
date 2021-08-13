@@ -43,7 +43,10 @@ router.beforeEach((to) => {
     } else if (to.path === "/main") {
       // 如果登陆成功状态直接访问根目录会首先被重定向到/main
       // 进入该逻辑分支并被再次重定向到flatUserMenuList中第一个对象中的url
-      return (store.state as IStoreType).login.flatUserMenuList[0]?.url
+      // 从flatUserMenuList中找到type值为2的对象就代表实际对应路由的对象
+      return (store.state as IStoreType).login.flatUserMenuList.find((item) => {
+        return item.type === 2
+      })?.url
     }
   }
 })

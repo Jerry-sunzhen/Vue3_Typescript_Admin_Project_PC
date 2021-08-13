@@ -1,6 +1,8 @@
 // 将user中使用JHocForm所需要的配置项抽取到该文件中
 
-const userJHocFormConfig = {
+import { JHocFormConfig } from "@/views/main/system/user/config/types"
+
+const userJHocFormConfig: JHocFormConfig = {
   formItems: [
     {
       type: "text",
@@ -40,6 +42,9 @@ const userJHocFormConfig = {
     backgroundColor: "#e9eef3",
     color: "#333",
     borderRadius: "5px"
+  },
+  responsiveConfig: {
+    lg: 8
   }
 }
 
