@@ -8,7 +8,7 @@
       <main-menu :isFolded="isFolded" />
     </el-aside>
     <el-container>
-      <el-header height="30px">
+      <el-header>
         <main-nav v-model:isFolded="isFolded" />
       </el-header>
       <el-main class="main-router-view">
@@ -60,7 +60,7 @@ export default defineComponent({
     }
   }
   .main-router-view {
-    min-width: 400px;
+    background-color: #f2f6fc;
   }
 }
 </style>

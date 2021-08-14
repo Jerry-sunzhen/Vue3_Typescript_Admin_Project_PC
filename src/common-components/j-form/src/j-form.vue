@@ -3,7 +3,7 @@
     status-icon
     ref="ruleForm"
     :label-width="labelWidth"
-    class="j-hoc-form"
+    class="j-form"
     :style="styleConfig"
   >
     <slot name="header"></slot>
@@ -14,7 +14,7 @@
             <template v-if="item.type === 'text'">
               <el-input
                 type="text"
-                v-model="formData[`${item.label}`]"
+                v-model="formData[`${item.field}`]"
               ></el-input>
             </template>
             <template v-else-if="item.type === 'password'">
@@ -105,7 +105,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="less">
-.j-hoc-form {
-}
-</style>
+<style scoped lang="less"></style>

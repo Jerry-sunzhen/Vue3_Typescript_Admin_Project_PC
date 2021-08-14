@@ -1,7 +1,7 @@
 <template>
   <div class="main-nav">
     <div @click="changeFoldStatus" class="nav-icon">
-      <i :class="isFolded ? 'el-icon-s-fold' : 'el-icon-s-unfold'"></i>
+      <i :class="isFolded ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
     </div>
     <div class="nav-container">
       <div class="breadcrumb">
@@ -69,10 +69,13 @@ export default defineComponent({
 .main-nav {
   line-height: 30px;
   border-bottom: 2px solid #545c64;
+  background-color: #fff;
   display: flex;
   align-items: center;
+  z-index: 10;
+  position: relative;
   .nav-icon {
-    font-size: 20px;
+    font-size: 30px;
   }
   .nav-container {
     margin-left: 10px;

@@ -3,6 +3,9 @@ export type IFormItem = IBaseFormItem &
   (IFormTextItem | IFormPasswordItem | IFormSelectItem | IFormDataPicker)
 
 export interface IBaseFormItem {
+  // 绑定数据对应的字段名
+  field: string
+  // 显示在界面的名称
   label?: string
   placeholder?: string
 }
@@ -16,16 +19,15 @@ export interface IFormPasswordItem {
   showPassword?: boolean
 }
 
-export interface IFormOption {
-  label?: string | number
-  value?: string | number
-}
 export interface IFormSelectItem {
   type: "select"
   options?: IFormOption[]
 }
+export interface IFormOption {
+  label?: string | number
+  value?: string | number
+}
 
-type DateFormatTye = "DD/MM/YYYY" | "YYYY-MM-DD" | "YY-MM-DD HH:mm:ss"
 export interface IFormDataPicker {
   type: "date-picker"
   format?: DateFormatTye
@@ -33,6 +35,7 @@ export interface IFormDataPicker {
   startPlaceholder?: string
   endPlaceholder?: string
 }
+type DateFormatTye = "DD/MM/YYYY" | "YYYY-MM-DD" | "YY-MM-DD HH:mm:ss"
 
 // ---- 表单响应式数据对象类型
 export declare interface IResponsiveAttr {
