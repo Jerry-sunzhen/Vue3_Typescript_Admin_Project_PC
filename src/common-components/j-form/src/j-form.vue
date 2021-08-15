@@ -8,7 +8,7 @@
   >
     <slot name="header"></slot>
     <el-row>
-      <template v-for="(item, index) in formItems" :key="index">
+      <template v-for="(item, index) in formItemList" :key="index">
         <el-col v-bind="responsiveConfig">
           <el-form-item :label="item.label">
             <template v-if="item.type === 'text'">
@@ -62,7 +62,7 @@ export default defineComponent({
     modelValue: {
       type: Object
     },
-    formItems: {
+    formItemList: {
       type: Array as PropType<IFormItem[]>,
       default: () => []
     },

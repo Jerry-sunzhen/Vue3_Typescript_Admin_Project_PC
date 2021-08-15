@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue"
+import { computed, defineComponent, PropType, ref } from "vue"
 import { JTable } from "@/common-components"
 import { useStore } from "@/store"
 import type { IPageContentConfig } from "@/components/page-content"
@@ -48,13 +48,28 @@ export default defineComponent({
   components: {
     JTable
   },
-  setup() {
+  setup(props) {
+    const pageName = ref(props.pageContentConfig.pageName)
     const store = useStore()
-    store.dispatch("system/getUserList", { offset: 0, limit: 10 })
+    store.dispatch("system/getPageListByPageName", {
+      pageName: pageName.value,
+      offset: 0,
+      limit: 10
+    })
 
     // 注意:此处读取仓库中的属性,需要使用computed函数进行包裹保证响应式(options API中也需要在computed中使用)
-    const tableData = computed(() => store.state.system.userList)
-    const tablePage = computed(() => store.state.system.userTotalCount)
+    let tableData
+    let tablePage
+    switch (pageName.value) {
+      case "users":
+        tableData = computed(() => store.state.system.usersList)
+        tablePage = computed(() => store.state.system.usersTotalCount)
+        break
+      case "role":
+        tableData = computed(() => store.state.system.roleList)
+        tablePage = computed(() => store.state.system.roleTotalCount)
+        break
+    }
 
     return {
       tableData,

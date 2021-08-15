@@ -11,9 +11,9 @@ import PageContent from "@/components/page-content"
 import PageSearch from "@/components/page-search"
 
 // 引入user中使用JHocForm相关的配置参数对象
-import userPageSearchConfig from "@/views/main/system/user/config/user-page-search-config"
+import userPageSearchConfig from "./config/user-page-search-config"
 // 引入user中使用PageContent组件相关的配置参数
-import userPageContentConfig from "@/views/main/system/user/config/user-page-content-config"
+import userPageContentConfig from "./config/user-page-content-config"
 export default defineComponent({
   components: {
     PageSearch,

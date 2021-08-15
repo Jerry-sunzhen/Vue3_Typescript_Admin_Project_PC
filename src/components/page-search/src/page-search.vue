@@ -32,13 +32,13 @@ export default defineComponent({
   components: {
     JForm
   },
-  setup() {
-    const formData = ref({
-      username: "",
-      password: "",
-      friends: "",
-      time: ""
-    })
+  setup(props) {
+    // 传入j-form的表单数据需要根据pageSearchConfig中的每一个formItem的field字段动态生成
+    const formDataObj: { [index: string]: string } = {}
+    for (let formItem of props.pageSearchConfig?.formItemList || []) {
+      formDataObj[formItem.field] = ""
+    }
+    const formData = ref(formDataObj)
     return {
       formData
     }

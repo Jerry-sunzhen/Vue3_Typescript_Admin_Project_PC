@@ -1,9 +1,15 @@
 import { AxiosPromise } from "axios"
 
 export interface ISystem {
-  user: IUser
+  getPageListByPageName: (url: string, data: IPageListData) => AxiosPromise
+  // user: IUser
 }
 
-export interface IUser {
-  getUserList: (offset: number, limit: number) => AxiosPromise
+// export interface IUser {
+//
+// }
+
+export interface IPageListData {
+  offset: number
+  size: number
 }

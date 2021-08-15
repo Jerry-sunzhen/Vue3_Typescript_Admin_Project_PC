@@ -2,7 +2,7 @@
 import { IPageSearchConfig } from "@/components/page-search/types"
 
 const userPageSearchConfig: IPageSearchConfig = {
-  formItems: [
+  formItemList: [
     {
       field: "username",
       type: "text",
@@ -10,7 +10,7 @@ const userPageSearchConfig: IPageSearchConfig = {
       placeholder: "请输入用户名"
     },
     {
-      field: "密码",
+      field: "password",
       type: "password",
       label: "密码",
       showPassword: true,

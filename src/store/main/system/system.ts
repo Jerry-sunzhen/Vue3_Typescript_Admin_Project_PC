@@ -1,31 +1,55 @@
 import { Module } from "vuex"
 import type { IRootState } from "@/store/types"
-import type { ISystemState, IUserListItem } from "@/store/main/system/types"
+import type {
+  ISystemState,
+  IUserListItem,
+  IRoleListItem,
+  IGetListPayLoad
+} from "@/store/main/system/types"
 
 import api from "@/api"
+import formatCapitalLetter from "@/utils/format-capital-letter"
 
 const systemModule: Module<ISystemState, IRootState> = {
   namespaced: true,
   state: () => ({
-    userList: [],
-    userTotalCount: 0
+    usersList: [],
+    usersTotalCount: 0,
+    roleList: [],
+    roleTotalCount: 0
   }),
   mutations: {
-    setUserList(state, userList: IUserListItem[]) {
-      state.userList = userList
+    setUsersList(state, userList: IUserListItem[]) {
+      state.usersList = userList
     },
-    setUserTotalCount(state, totalCount) {
-      state.userTotalCount = totalCount
+    setUsersTotalCount(state, totalCount: number) {
+      state.usersTotalCount = totalCount
+    },
+    setRoleList(state, userList: IRoleListItem[]) {
+      state.roleList = userList
+    },
+    setRoleTotalCount(state, totalCount: number) {
+      state.roleTotalCount = totalCount
     }
   },
   actions: {
-    async getUserList(
+    // 将所有获取页面列表信息的异步操作统一封装成一个action
+    // 通过给payload对象传入不同的pageName来确定需要获取页面的名称并调用不同的mutation
+    async getPageListByPageName(
       ctx,
-      { offset, limit }: { offset: number; limit: number }
+      { pageName, offset, size }: IGetListPayLoad
     ) {
-      const { data } = await api.main.system.user.getUserList(offset, limit)
-      ctx.commit("setUserList", data.list)
-      ctx.commit("setUserTotalCount", data.totalCount)
+      const capitalPageName = formatCapitalLetter(pageName)
+
+      const { data } = await api.main.system.getPageListByPageName(
+        `/${pageName}/list`,
+        {
+          offset,
+          size
+        }
+      )
+      ctx.commit(`set${capitalPageName}List`, data.list)
+      ctx.commit(`set${capitalPageName}TotalCount`, data.totalCount)
     }
   }
 }
