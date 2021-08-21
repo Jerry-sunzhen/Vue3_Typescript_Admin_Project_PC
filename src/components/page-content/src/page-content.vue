@@ -57,19 +57,14 @@ export default defineComponent({
       limit: 10
     })
 
-    // 注意:此处读取仓库中的属性,需要使用computed函数进行包裹保证响应式(options API中也需要在computed中使用)
-    let tableData
-    let tablePage
-    switch (pageName.value) {
-      case "users":
-        tableData = computed(() => store.state.system.usersList)
-        tablePage = computed(() => store.state.system.usersTotalCount)
-        break
-      case "role":
-        tableData = computed(() => store.state.system.roleList)
-        tablePage = computed(() => store.state.system.roleTotalCount)
-        break
-    }
+    // 注意:此处读取仓库中的getter,需要使用computed函数进行包裹保证响应式
+    // (options API中也需要在computed中对mapGetters进行解构)
+    let tableData = computed(() =>
+      store.getters["system/pageListData"](pageName.value)
+    )
+    let tablePage = computed(() =>
+      store.getters["system/pageListCount"](pageName.value)
+    )
 
     return {
       tableData,

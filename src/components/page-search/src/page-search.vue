@@ -6,7 +6,11 @@
       </template>
       <template #footer>
         <div class="form-footer">
-          <el-button type="info" icon="el-icon-refresh-right" size="mini"
+          <el-button
+            type="info"
+            icon="el-icon-refresh-right"
+            size="mini"
+            @click="resetJForm"
             >重置</el-button
           >
           <el-button type="primary" icon="el-icon-search" size="mini"
@@ -39,8 +43,19 @@ export default defineComponent({
       formDataObj[formItem.field] = ""
     }
     const formData = ref(formDataObj)
+
+    // 重置搜索框
+    function resetJForm() {
+      // 这里遍历修改formData中的属性值,本质上就是修改了JForm中进行v-model的label对应的值
+      // 由于数据驱动,界面会进行同步修改
+      for (let key in formData.value) {
+        formData.value[key] = ""
+      }
+    }
+
     return {
-      formData
+      formData,
+      resetJForm
     }
   }
 })

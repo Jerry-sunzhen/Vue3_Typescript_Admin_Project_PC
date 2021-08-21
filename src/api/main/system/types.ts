@@ -8,7 +8,6 @@ export interface ISystem {
 // export interface IUser {
 //
 // }
-
 export interface IPageListData {
   offset: number
   size: number

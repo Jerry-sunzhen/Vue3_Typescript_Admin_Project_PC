@@ -16,16 +16,12 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-plus"
-                >狮子头</el-dropdown-item
+              <el-dropdown-item icon="el-icon-s-home" @click="skipToMain"
+                >返回首页</el-dropdown-item
               >
-              <el-dropdown-item icon="el-icon-circle-plus-outline"
-                >螺蛳粉</el-dropdown-item
-              >
-              <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-check"
-                >蚵仔煎</el-dropdown-item
+
+              <el-dropdown-item icon="el-icon-error" @click="logout"
+                >退出登陆</el-dropdown-item
               >
             </el-dropdown-menu>
           </template>
@@ -37,7 +33,7 @@
 
 <script lang="ts">
 import { defineComponent, computed } from "vue"
-import { useRoute } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import { useStore } from "@/store"
 import { JBreadcrumb } from "@/common-components"
 import mapRouteToBreadcrumbList from "@/utils/map-route-to-breadcrumb-list"
@@ -52,13 +48,27 @@ export default defineComponent({
     }
 
     const route = useRoute()
+    const router = useRouter()
     const store = useStore()
+
+    // 计算需要显示的面包屑导航对应的数组
     const breadcrumbList = computed(() =>
       mapRouteToBreadcrumbList(route.path, store.state.login.flatUserMenuList)
     )
+    function skipToMain() {
+      router.replace("/")
+    }
+
+    // 退出登陆
+    async function logout() {
+      await store.dispatch("login/logout")
+      await router.replace("/login")
+    }
 
     return {
       changeFoldStatus,
+      skipToMain,
+      logout,
       breadcrumbList
     }
   }

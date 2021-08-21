@@ -9,16 +9,20 @@ import type { ILoginState, IUserInfo, IUserMenu } from "@/store/login/types"
 import mapMenuToRoutes from "@/utils/map-menu-to-routes"
 import flatMenuToList from "@/utils/flat-menu-to-list"
 
-// Module类型接收两个泛型
-// 第一个泛型为模块中state函数返回对象类型,第二个泛型为根模块中state返回对象的属性
-const loginModule: Module<ILoginState, IRootState> = {
-  namespaced: true,
-  state: () => ({
+function resetState(): ILoginState {
+  return {
     token: "",
     userInfo: {},
     userMenuList: [],
     flatUserMenuList: []
-  }),
+  }
+}
+
+// Module类型接收两个泛型
+// 第一个泛型为模块中state函数返回对象类型,第二个泛型为根模块中state返回对象的属性
+const loginModule: Module<ILoginState, IRootState> = {
+  namespaced: true,
+  state: resetState(),
   getters: {},
   mutations: {
     setToken(state, token) {
@@ -39,6 +43,9 @@ const loginModule: Module<ILoginState, IRootState> = {
 
       // 通过引入工具函数获取到接口返回数据中路由组件对应的对象组成的一维数组并放入login对应的仓库中
       state.flatUserMenuList = flatMenuToList(userMenuList)
+    },
+    resetState(state) {
+      Object.assign(state, resetState())
     }
   },
   actions: {
@@ -73,7 +80,7 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
 
     // 刷新页面后初始化仓库
-    resetLoginsState(ctx) {
+    resetLoginState(ctx) {
       const token = localCache.getCache("token")
       if (token) {
         ctx.commit("setToken", token)
@@ -86,6 +93,15 @@ const loginModule: Module<ILoginState, IRootState> = {
       if (userMenuList) {
         ctx.commit("setUserMenuList", userMenuList)
       }
+    },
+
+    // 退出登陆的actions
+    logout(ctx) {
+      // 清除本地数据,清除仓库中对应数据
+      localCache.removeCache("token")
+      localCache.removeCache("userInfo")
+      localCache.removeCache("userMenuList")
+      ctx.commit("resetState")
     }
   }
 }

@@ -21,11 +21,11 @@
               <el-input
                 type="password"
                 :show-password="item.showPassword"
-                v-model="formData[`${item.label}`]"
+                v-model="formData[`${item.field}`]"
               ></el-input>
             </template>
             <template v-else-if="item.type === 'select'">
-              <el-select v-model="formData[`${item.label}`]">
+              <el-select v-model="formData[`${item.field}`]">
                 <el-option
                   v-for="(option, index) in item.options"
                   :key="index"
@@ -37,7 +37,7 @@
             </template>
             <template v-else-if="item.type === 'date-picker'">
               <el-date-picker
-                v-model="formData[`${item.label}`]"
+                v-model="formData[`${item.field}`]"
                 type="date"
                 :start-placeholder="item.startPlaceholder"
                 :end-placeholder="item.endPlaceholder"
@@ -98,6 +98,7 @@ export default defineComponent({
         deep: true
       }
     )
+
     return {
       formData
     }

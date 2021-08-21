@@ -2,5 +2,5 @@
 import store from "store"
 
 export default function useResetStore(): void {
-  store.dispatch("login/resetLoginsState")
+  store.dispatch("login/resetLoginState")
 }

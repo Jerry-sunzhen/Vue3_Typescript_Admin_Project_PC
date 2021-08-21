@@ -18,6 +18,20 @@ const systemModule: Module<ISystemState, IRootState> = {
     roleList: [],
     roleTotalCount: 0
   }),
+  getters: {
+    // 使用函数柯里化,通过给getters传入具体的pageName获取不同的state信息
+    // 在使用时候就无需调用各自的state,统一入口
+    pageListData(state) {
+      return (pageName: string) => {
+        return (state as any)[`${pageName}List`]
+      }
+    },
+    pageListCount(state) {
+      return (pageName: string) => {
+        return (state as any)[`${pageName}TotalCount`]
+      }
+    }
+  },
   mutations: {
     setUsersList(state, userList: IUserListItem[]) {
       state.usersList = userList
