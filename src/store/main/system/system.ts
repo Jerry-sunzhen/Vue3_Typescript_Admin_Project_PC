@@ -51,7 +51,7 @@ const systemModule: Module<ISystemState, IRootState> = {
     // 通过给payload对象传入不同的pageName来确定需要获取页面的名称并调用不同的mutation
     async getPageListByPageName(
       ctx,
-      { pageName, offset, size }: IGetListPayLoad
+      { pageName, offset, size, queryData }: IGetListPayLoad
     ) {
       const capitalPageName = formatCapitalLetter(pageName)
 
@@ -59,7 +59,8 @@ const systemModule: Module<ISystemState, IRootState> = {
         `/${pageName}/list`,
         {
           offset,
-          size
+          size,
+          ...queryData
         }
       )
       ctx.commit(`set${capitalPageName}List`, data.list)

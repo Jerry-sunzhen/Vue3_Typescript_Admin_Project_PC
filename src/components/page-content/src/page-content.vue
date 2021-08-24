@@ -2,7 +2,8 @@
   <div class="page-content">
     <j-table
       :table-data="tableData"
-      :table-page="tablePage"
+      :data-count="dataCount"
+      v-model:page-info="pageInfo"
       class="table-section"
       v-bind="pageContentConfig"
     >
@@ -33,9 +34,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from "vue"
-import { JTable } from "@/common-components"
+import { computed, defineComponent, PropType, ref, watch } from "vue"
 import { useStore } from "@/store"
+import { JTable } from "@/common-components"
+import type { IFormData } from "@/components/page-search"
 import type { IPageContentConfig } from "@/components/page-content"
 
 export default defineComponent({
@@ -51,24 +53,45 @@ export default defineComponent({
   setup(props) {
     const pageName = ref(props.pageContentConfig.pageName)
     const store = useStore()
-    store.dispatch("system/getPageListByPageName", {
-      pageName: pageName.value,
-      offset: 0,
-      limit: 10
+
+    const pageInfo = ref({
+      currentPage: 1,
+      pageSize: 5
     })
+
+    function getPageListByPageName(data: IFormData = {}) {
+      store.dispatch("system/getPageListByPageName", {
+        pageName: pageName.value,
+        offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
+        size: pageInfo.value.pageSize,
+        queryData: data
+      })
+    }
+    watch(
+      pageInfo,
+      () => {
+        getPageListByPageName()
+      },
+      {
+        deep: true,
+        immediate: true
+      }
+    )
 
     // 注意:此处读取仓库中的getter,需要使用computed函数进行包裹保证响应式
     // (options API中也需要在computed中对mapGetters进行解构)
     let tableData = computed(() =>
       store.getters["system/pageListData"](pageName.value)
     )
-    let tablePage = computed(() =>
+    let dataCount = computed(() =>
       store.getters["system/pageListCount"](pageName.value)
     )
 
     return {
       tableData,
-      tablePage
+      getPageListByPageName,
+      pageInfo,
+      dataCount
     }
   }
 })

@@ -4,40 +4,45 @@ import { IPageSearchConfig } from "@/components/page-search/types"
 const userPageSearchConfig: IPageSearchConfig = {
   formItemList: [
     {
-      field: "username",
-      type: "text",
       label: "用户名",
+      field: "name",
+      type: "text",
       placeholder: "请输入用户名"
     },
     {
-      field: "password",
+      label: "真实姓名",
+      field: "realname",
       type: "password",
-      label: "密码",
-      showPassword: true,
-      placeholder: "请输入密码"
+      placeholder: "请输入密码",
+      showPassword: true
     },
     {
-      field: "friends",
+      field: "cellphone",
+      type: "text",
+      label: "手机号码",
+      placeholder: "请输入手机号码"
+    },
+    {
+      field: "enable",
       type: "select",
-      label: "朋友",
-      placeholder: "请选择好友",
+      label: "搜索日期",
       options: [
         {
-          label: "jerry",
-          value: 1
+          value: 0,
+          label: "可用"
         },
         {
-          label: "doris",
-          value: 2
+          value: 1,
+          label: "禁用"
         }
       ]
     },
     {
-      field: "time",
+      label: "创建时间",
+      field: "createAt",
       type: "date-picker",
-      label: "搜索日期",
-      startPlaceholder: "start",
-      endPlaceholder: "end"
+      startPlaceholder: "请输入开始日期",
+      endPlaceholder: "请输入结束日期"
     }
   ],
   styleConfig: {

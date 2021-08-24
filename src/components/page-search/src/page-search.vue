@@ -10,10 +10,14 @@
             type="info"
             icon="el-icon-refresh-right"
             size="mini"
-            @click="resetJForm"
+            @click="handleResetBtn"
             >重置</el-button
           >
-          <el-button type="primary" icon="el-icon-search" size="mini"
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            size="mini"
+            @click="handleSearchBtn"
             >搜索</el-button
           >
         </div>
@@ -24,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from "vue"
-import type { IPageSearchConfig } from "@/components/page-search"
+import type { IFormData, IPageSearchConfig } from "@/components/page-search"
 import JForm from "@/common-components/j-form"
 
 export default defineComponent({
@@ -36,26 +40,34 @@ export default defineComponent({
   components: {
     JForm
   },
-  setup(props) {
+  emits: ["handleSearch", "handleReset"],
+  setup(props, { emit }) {
     // 传入j-form的表单数据需要根据pageSearchConfig中的每一个formItem的field字段动态生成
-    const formDataObj: { [index: string]: string } = {}
+    const formDataObj: IFormData = {}
     for (let formItem of props.pageSearchConfig?.formItemList || []) {
       formDataObj[formItem.field] = ""
     }
     const formData = ref(formDataObj)
 
+    // 进行搜索
+    function handleSearchBtn() {
+      emit("handleSearch", formData.value)
+    }
+
     // 重置搜索框
-    function resetJForm() {
+    function handleResetBtn() {
       // 这里遍历修改formData中的属性值,本质上就是修改了JForm中进行v-model的label对应的值
       // 由于数据驱动,界面会进行同步修改
       for (let key in formData.value) {
         formData.value[key] = ""
       }
+      emit("handleReset")
     }
 
     return {
       formData,
-      resetJForm
+      handleSearchBtn,
+      handleResetBtn
     }
   }
 })

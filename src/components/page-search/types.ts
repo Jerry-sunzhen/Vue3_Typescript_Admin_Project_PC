@@ -6,3 +6,7 @@ export interface IPageSearchConfig {
   labelWidth?: string
   responsiveConfig?: IResponsiveAttr
 }
+
+export interface IFormData {
+  [index: string]: string
+}

@@ -1,6 +1,12 @@
 //----表单元素类型相关
 export type IFormItem = IBaseFormItem &
-  (IFormTextItem | IFormPasswordItem | IFormSelectItem | IFormDataPicker)
+  (
+    | IFormTextItem
+    | IFormPasswordItem
+    | IFormNumberItem
+    | IFormSelectItem
+    | IFormDataPicker
+  )
 
 export interface IBaseFormItem {
   // 绑定数据对应的字段名
@@ -17,6 +23,10 @@ export interface IFormTextItem {
 export interface IFormPasswordItem {
   type: "password"
   showPassword?: boolean
+}
+
+export interface IFormNumberItem {
+  type: "number"
 }
 
 export interface IFormSelectItem {

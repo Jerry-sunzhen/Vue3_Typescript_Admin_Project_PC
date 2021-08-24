@@ -49,11 +49,11 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage"
+          :current-page="pageInfo.currentPage"
           :page-sizes="[5, 10, 15, 25, 50]"
-          :page-size="5"
+          :page-size="pageInfo.pageSize"
           layout="prev, pager, next, jumper, ->,sizes,total"
-          :total="tablePage"
+          :total="dataCount"
         >
         </el-pagination>
       </slot>
@@ -62,12 +62,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue"
+import { defineComponent } from "vue"
 import { PropType } from "vue"
 import { IUserListItem } from "@/store/main/system/types"
 import { ITablePropItem } from "@/common-components/j-table"
 
 export default defineComponent({
+  emits: ["selectChange", "update:page-info"],
   props: {
     title: {
       type: String
@@ -75,7 +76,7 @@ export default defineComponent({
     tableData: {
       type: Array as PropType<IUserListItem[]>
     },
-    tablePage: {
+    dataCount: {
       type: Number,
       default: 0
     },
@@ -94,22 +95,34 @@ export default defineComponent({
     showSelectColumn: {
       type: Boolean,
       default: false
+    },
+    pageInfo: {
+      type: Object,
+      default: () => ({
+        currentPage: 1,
+        pageSize: 10
+      })
     }
   },
   setup(prop, { emit }) {
     function selectionChange(chosenList: any[]) {
+      console.log(chosenList)
       emit("selectChange", chosenList)
     }
 
-    function handleSizeChange(currentSize: number) {
-      console.log(currentSize)
+    function handleSizeChange(pageSize: number) {
+      emit("update:page-info", {
+        ...prop.pageInfo,
+        pageSize
+      })
     }
     function handleCurrentChange(currentPage: number) {
-      console.log(currentPage)
+      emit("update:page-info", {
+        ...prop.pageInfo,
+        currentPage
+      })
     }
-    const currentPage = ref()
     return {
-      currentPage,
       selectionChange,
       handleSizeChange,
       handleCurrentChange

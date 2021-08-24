@@ -24,6 +24,12 @@
                 v-model="formData[`${item.field}`]"
               ></el-input>
             </template>
+            <template v-else-if="item.type === 'number'">
+              <el-input
+                type="number"
+                v-model="formData[`${item.field}`]"
+              ></el-input>
+            </template>
             <template v-else-if="item.type === 'select'">
               <el-select v-model="formData[`${item.field}`]">
                 <el-option
@@ -38,7 +44,7 @@
             <template v-else-if="item.type === 'date-picker'">
               <el-date-picker
                 v-model="formData[`${item.field}`]"
-                type="date"
+                type="daterange"
                 :start-placeholder="item.startPlaceholder"
                 :end-placeholder="item.endPlaceholder"
               ></el-date-picker>

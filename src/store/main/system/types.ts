@@ -10,6 +10,7 @@ export interface IGetListPayLoad {
   offset: number
   size: number
   pageName: string
+  queryData?: any
 }
 
 //------------------接口返回数据类型如下---------------
