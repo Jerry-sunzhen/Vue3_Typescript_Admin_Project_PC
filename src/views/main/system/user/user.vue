@@ -31,14 +31,6 @@ export default defineComponent({
     PageContent
   },
   setup() {
-    // 这些与pageSearch的搜索与清空按钮相关的逻辑可以抽取成一个hook,便于其他页面复用
-    // const pageContentRef = ref<InstanceType<typeof PageContent>>()
-    // function handleSearch(formData: IFormData) {
-    //   pageContentRef.value?.getPageListByPageName(formData)
-    // }
-    // function handleReset() {
-    //   pageContentRef.value?.getPageListByPageName()
-    // }
     const { handleReset, handleSearch, pageContentRef } = usePageSearchHandle()
 
     return {

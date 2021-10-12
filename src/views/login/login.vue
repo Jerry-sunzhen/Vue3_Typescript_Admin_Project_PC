@@ -24,6 +24,6 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("../../assets/image/background.jpeg") center/100% 100%;
+  background: url("~assets/image/background.jpeg") center/100% 100%;
 }
 </style>

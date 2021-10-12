@@ -93,7 +93,7 @@ export default defineComponent({
   setup(props, { emit }) {
     // 对props中接收到的modelValue对象进行浅拷贝,对传入的数据生成一个新的引用,并赋予响应式
     const formData = ref({ ...props.modelValue })
-    // 使用watch监听formData,当formData发生改变的时候需要发射时间修改父组件的formData
+    // 使用watch监听formData,当formData发生改变的时候需要发射事件修改父组件的formData
     // 注意:需要开启深度监听
     watch(
       formData,
